@@ -1,7 +1,7 @@
 import { test as setup } from '@playwright/test';
 import fs from 'fs';
 
-const authFile = (role: string) => `.auth/${role}.json`;
+const authFile = (userRole: string) => `.auth/${userRole}.json`;
 
 setup('authentication', async ({ request }, testInfo) => {
     
@@ -13,12 +13,10 @@ setup('authentication', async ({ request }, testInfo) => {
         user: { username: 'user', password: 'user' }, 
     };
 
-    const { username, password } = credentials[role];
-
     const response = await request.post('http://localhost:8080/api/authenticate', {
         data: {
-            username,
-            password,
+            username: credentials[role].username,
+            password: credentials[role].password,
             rememberMe: false,
         },
     });
