@@ -1,7 +1,7 @@
 import { test as setup } from '@playwright/test';
 import fs from 'fs';
 
-const authFile = (userRole: string) => `.auth/${userRole}.json`;
+const authFilePath = (userRole: string) => `.auth/${userRole}.json`;
 
 setup('authentication', async ({ request }, testInfo) => {
     
@@ -45,5 +45,5 @@ setup('authentication', async ({ request }, testInfo) => {
         ],
     };
 
-    fs.writeFileSync(authFile(role), JSON.stringify(storageState, null, 2));
+    fs.writeFileSync(authFilePath(role), JSON.stringify(storageState, null, 2));
 });

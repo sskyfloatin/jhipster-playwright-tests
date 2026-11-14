@@ -35,6 +35,11 @@ export default defineConfig({
   /* Configure projects for major browsers */
   projects: [
     {
+      name: 'ui-login',
+      use: { ...devices['Desktop Chrome']},
+      testMatch: 'login.spec.ts',
+    },
+    {
       name: 'setup-admin',
       testMatch: 'auth.setup.ts',
     },
@@ -45,12 +50,14 @@ export default defineConfig({
     {
       name: 'admin',
       use: { ...devices['Desktop Chrome'], storageState: '.auth/admin.json' },
-      dependencies:['setup-admin']
+      dependencies:['setup-admin'],
+      testIgnore: 'login.spec.ts',
     },
     {
       name: 'user',
       use: { ...devices['Desktop Chrome'], storageState: '.auth/user.json' },
-      dependencies:['setup-user']
+      dependencies:['setup-user'],
+      testIgnore: 'login.spec.ts',
     },
     // {
     //   name: 'firefox',
