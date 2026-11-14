@@ -1,14 +1,13 @@
 import { Locator, Page } from "@playwright/test";
-import { BasePage as BasePage } from "./basePage";
 
-export class HomePage extends BasePage {
-
+export class HomePage  {
+    readonly page: Page
     readonly entitiesMenuItem: Locator
     readonly entityMenu: Locator
+    
 
 
     constructor(page: Page) {
-        super(page)
         this.entitiesMenuItem = page.getByText('Entities')
         this.entityMenu = page.locator('#entity-menu > div')
     }
@@ -16,7 +15,6 @@ export class HomePage extends BasePage {
     async openEntities() {
         await this.entitiesMenuItem.click()
         await this.selectGroupMenuItem('Category')
-        await this.waitForNumberOfSeonds(3)
     }
 
     private async selectGroupMenuItem(groupItemTitle: string) {
