@@ -40,6 +40,11 @@ export default defineConfig({
       testMatch: 'login.spec.ts',
     },
     {
+      name: 'ui-register',
+      use: { ...devices['Desktop Chrome']},
+      testMatch: 'register.spec.ts',
+    },
+    {
       name: 'setup-admin',
       testMatch: 'auth.setup.ts',
     },
@@ -51,13 +56,13 @@ export default defineConfig({
       name: 'admin',
       use: { ...devices['Desktop Chrome'], storageState: '.auth/admin.json' },
       dependencies:['setup-admin'],
-      testIgnore: 'login.spec.ts',
+      testIgnore: ['login.spec.ts', 'register.spec.ts'],
     },
     {
       name: 'user',
       use: { ...devices['Desktop Chrome'], storageState: '.auth/user.json' },
       dependencies:['setup-user'],
-      testIgnore: 'login.spec.ts',
+      testIgnore: ['login.spec.ts', 'register.spec.ts'],
     },
     // {
     //   name: 'firefox',
