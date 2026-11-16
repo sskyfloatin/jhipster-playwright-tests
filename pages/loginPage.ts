@@ -1,4 +1,4 @@
-import { Page, Locator } from '@playwright/test';
+import { Page, Locator, expect } from '@playwright/test';
 
 export class LoginPage {
   readonly page: Page;
@@ -23,5 +23,14 @@ export class LoginPage {
     await this.usernameInput.fill(username);
     await this.passwordInput.fill(password);
     await this.signInButton.click();
+  }
+
+  async verifyLoginSuccess() {
+    await expect(this.page.getByRole('alert').filter({ hasText: `You are logged in` })).toBeVisible();
+  }
+
+  async verifyLoginFailure() {
+    await expect(this.page.getByRole('alert').filter({ hasText: `Failed to sign in!` })).toBeVisible();
+    await expect(this.page).toHaveURL(/\/login/);
   }
 }

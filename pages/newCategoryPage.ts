@@ -1,4 +1,4 @@
-import { Page, Locator } from '@playwright/test';
+import { Page, Locator, expect} from '@playwright/test';
 
 export class NewCategoryPage {
   readonly page: Page;
@@ -18,4 +18,8 @@ export class NewCategoryPage {
     await this.saveButton.click();
   }
 
+  async verifyCategoryCreated(categoryName: string) {
+      await expect(this.page.getByRole('alert').filter({ hasText: `A new Category is created with identifier ` })).toBeVisible();
+      await expect(this.page.getByRole('cell', { name: categoryName })).toBeVisible();
+  }
 }

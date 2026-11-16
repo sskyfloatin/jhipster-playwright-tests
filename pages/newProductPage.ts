@@ -1,4 +1,4 @@
-import { Page, Locator } from '@playwright/test';
+import { Page, Locator, expect } from '@playwright/test';
 
 export class NewProductPage {
   readonly page: Page;
@@ -15,7 +15,6 @@ export class NewProductPage {
     this.descriptionInput = page.getByRole('textbox', { name: 'description' });
     this.categorySelect = page.getByRole('combobox', { name: 'category' });
     this.saveButton = page.getByRole('button', { name: 'save' });
-
   }
 
   async fillAndSubmit(categoryName: string, price: number, description: string, category: string) {
@@ -24,5 +23,10 @@ export class NewProductPage {
     await this.descriptionInput.fill(description);
     await this.categorySelect.selectOption({ label: category });
     await this.saveButton.click();
+  }
+
+  async verifyProductCreated(productName: string) {
+    await expect(this.page.getByRole('alert').filter({ hasText: `A new Product is created with identifier ` })).toBeVisible();
+    await expect(this.page.getByRole('cell', { name: productName })).toBeVisible();
   }
 }
