@@ -1,4 +1,4 @@
-import { Page, Locator } from '@playwright/test';
+import { Page, Locator, expect } from '@playwright/test';
 
 export class RegistrationPage {
   readonly page: Page;
@@ -29,5 +29,9 @@ export class RegistrationPage {
     await this.firstPasswordInput.fill(password);
     await this.confirmPasswordInput.fill(confirmPassword);
     await this.registerButton.click();
+  }
+
+  async verifyRegistrationSuccess() {
+    await expect(this.page.getByRole('alert').filter({ hasText: `Registration saved!` })).toBeVisible();
   }
 }
