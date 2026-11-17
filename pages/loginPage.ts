@@ -25,8 +25,8 @@ export class LoginPage {
     await this.signInButton.click();
   }
 
-  async verifyLoginSuccess() {
-    await expect(this.page.getByRole('alert').filter({ hasText: `You are logged in` })).toBeVisible();
+  async verifyLoginSuccess(username: string) {
+    await expect(this.page.getByRole('alert').filter({ hasText: `You are logged in as user "${username}".` })).toBeVisible();
   }
 
   async verifyLoginFailure() {

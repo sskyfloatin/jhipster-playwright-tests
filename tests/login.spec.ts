@@ -7,7 +7,7 @@ test.beforeEach(async ({ loginPage }) => {
 
 test(`Verify user is able to log in`, async ({ loginPage }) => {
   await loginPage.login('admin', 'admin');
-  await loginPage.verifyLoginSuccess();
+  await loginPage.verifyLoginSuccess('admin');
 });
 
 test(`Verify user see validation error`, async ({ loginPage }, testInfo) => {
