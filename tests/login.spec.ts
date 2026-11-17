@@ -1,16 +1,19 @@
 import { test } from '../fixtures/pageFIxtures'
 
 
-test.beforeEach(async ({ loginPage }) => {
-  await loginPage.goto();
-});
+test.describe('Verify login form', () => {
+  
+  test.beforeEach(async ({ loginPage }) => {
+    await loginPage.goto();
+  });
 
-test(`Verify user is able to log in`, async ({ loginPage }) => {
-  await loginPage.login('admin', 'admin');
-  await loginPage.verifyLoginSuccess('admin');
-});
+  test(`Verify user is able to log in`, async ({ loginPage }) => {
+    await loginPage.login('admin', 'admin');
+    await loginPage.verifyLoginSuccess('admin');
+  });
 
-test(`Verify user see validation error`, async ({ loginPage }, testInfo) => {
-  await loginPage.login('hello', 'world');
-  await loginPage.verifyLoginFailure()
+  test(`Verify user see validation error`, async ({ loginPage }, testInfo) => {
+    await loginPage.login('hello', 'world');
+    await loginPage.verifyLoginFailure()
+  });
 });

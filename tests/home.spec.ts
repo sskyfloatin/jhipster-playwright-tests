@@ -2,6 +2,7 @@ import { test } from '../fixtures/pageFIxtures'
 
 
 test.describe(`Verify home page`, () => {
+  
   test.beforeEach(async ({ homePage }) => {
     await homePage.goto();
   });
