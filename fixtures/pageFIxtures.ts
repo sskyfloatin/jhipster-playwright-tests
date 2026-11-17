@@ -1,10 +1,11 @@
-import {test as base} from '@playwright/test';
+import { test as base } from '@playwright/test';
 import { CategoriesPage } from '../pages/categoriesPage';
 import { NewCategoryPage } from '../pages/newCategoryPage';
 import { ProductsPage } from '../pages/productsPage';
 import { NewProductPage } from '../pages/newProductPage';
 import { RegistrationPage } from '../pages/registrationPage';
 import { LoginPage } from '../pages/loginPage';
+import { HomePage } from '../pages/homePage';
 
 type myFixtures = {
   categoriesPage: CategoriesPage;
@@ -13,6 +14,7 @@ type myFixtures = {
   newProductPage: NewProductPage;
   registrationPage: RegistrationPage;
   loginPage: LoginPage;
+  homePage: HomePage;
 };
 
 export const test = base.extend<myFixtures>({
@@ -31,8 +33,11 @@ export const test = base.extend<myFixtures>({
   registrationPage: async ({ page }, use) => {
     await use(new RegistrationPage(page));
   },
-    loginPage: async ({ page }, use) => {
+  loginPage: async ({ page }, use) => {
     await use(new LoginPage(page));
+  },
+  homePage: async ({ page }, use) => {
+    await use(new HomePage(page));
   },
 });
 
