@@ -26,7 +26,10 @@ export class NewProductPage {
   }
 
   async verifyProductCreated(productName: string) {
-    await expect(this.page.getByRole('alert').filter({ hasText: `A new Product is created with identifier ` })).toBeVisible();
+    await expect(this.page.getByRole('alert').filter({
+      hasText:
+        `A new Product is created with identifier `
+    })).toBeVisible();
     await expect(this.page.getByRole('cell', { name: productName })).toBeVisible();
   }
 }

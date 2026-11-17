@@ -1,4 +1,4 @@
-import { Page, Locator } from '@playwright/test';
+import { Page, Locator, expect } from '@playwright/test';
 
 export class ProductsPage {
   readonly page: Page;
@@ -12,6 +12,11 @@ export class ProductsPage {
 
   async goto() {
     await this.page.goto('/product');
+  }
+
+  async verifyProductCreated(productName: string) {
+    await expect(this.page.getByRole('alert').filter({ hasText: `A new Product is created with identifier ` })).toBeVisible();
+    await expect(this.page.getByRole('cell', { name: productName })).toBeVisible();
   }
 
   async clickCreateProductButton() {
