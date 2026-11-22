@@ -18,11 +18,15 @@ export class NewProductPage {
   }
 
   async fillAndSubmit(categoryName: string, price: number, description: string, category: string) {
+    const responsePromise = this.page.waitForResponse(response => 
+      response.url().includes('/api/products') && response.request().method() === 'POST'
+    );
     await this.nameInput.fill(categoryName);
     await this.priceInput.fill(price.toString());
     await this.descriptionInput.fill(description);
     await this.categorySelect.selectOption({ label: category });
     await this.saveButton.click();
+    return await responsePromise;
   }
 
   async verifyProductCreated(productName: string) {

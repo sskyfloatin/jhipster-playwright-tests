@@ -14,8 +14,12 @@ export class NewCategoryPage {
   }
 
   async fillAndSubmit(categoryName: string) {
+    const responsePromise = this.page.waitForResponse(response => 
+      response.url().includes('/api/categories') && response.request().method() === 'POST'
+    );
     await this.nameInput.fill(categoryName);
     await this.saveButton.click();
+    return await responsePromise;
   }
 
   async verifyCategoryCreated(categoryName: string) {

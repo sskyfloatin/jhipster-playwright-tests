@@ -2,6 +2,7 @@ import { test as setup } from '@playwright/test';
 import fs from 'fs';
 
 const authFilePath = (userRole: string) => `.auth/${userRole}.json`;
+const baseUrl = process.env.BASE_URL || 'http://localhost:8080';
 
 setup('authentication', async ({ request }, testInfo) => {
     
@@ -13,7 +14,7 @@ setup('authentication', async ({ request }, testInfo) => {
         user: { username: 'user', password: 'user' }, 
     };
 
-    const response = await request.post('http://localhost:8080/api/authenticate', {
+    const response = await request.post(`${baseUrl}/api/authenticate`, {
         data: {
             username: credentials[role].username,
             password: credentials[role].password,
@@ -28,7 +29,7 @@ setup('authentication', async ({ request }, testInfo) => {
         cookies: [],
         origins: [
             {
-                origin: 'http://localhost:8080',
+                origin: baseUrl,
                 localStorage: [
                     {
                         name: 'jhi-authenticationToken',

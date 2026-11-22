@@ -6,6 +6,7 @@ import { NewProductPage } from '../pages/newProductPage';
 import { RegistrationPage } from '../pages/registrationPage';
 import { LoginPage } from '../pages/loginPage';
 import { HomePage } from '../pages/homePage';
+import { TeardownManager } from '../helpers/teardown';
 
 type myFixtures = {
   categoriesPage: CategoriesPage;
@@ -15,6 +16,7 @@ type myFixtures = {
   registrationPage: RegistrationPage;
   loginPage: LoginPage;
   homePage: HomePage;
+  teardown: TeardownManager;
 };
 
 export const test = base.extend<myFixtures>({
@@ -38,6 +40,9 @@ export const test = base.extend<myFixtures>({
   },
   homePage: async ({ page }, use) => {
     await use(new HomePage(page));
+  },
+  teardown: async ({}, use) => {
+    await use(new TeardownManager());
   },
 });
 

@@ -5,24 +5,32 @@ test.beforeEach(async ({ page }) => {
   await page.goto('/');
 })
 
+test.afterEach(async ({ request, teardown }) => {
+  await teardown.cleanup(request);
+});
+
 test.describe('Entities management ', () => {
 
-  test('Verify admin is able to create category', async ({ newCategoryPage, categoriesPage }) => {
+  test('Verify admin is able to create category', async ({ newCategoryPage, categoriesPage, teardown }) => {
     const categoryName = faker.word.noun();
     await categoriesPage.goto();
     await categoriesPage.clickCreateCategoryButton();
-    await newCategoryPage.fillAndSubmit(categoryName);
+    const response = await newCategoryPage.fillAndSubmit(categoryName);
+    const category = await response.json();
+    teardown.track('category', category.id);
     await newCategoryPage.verifyCategoryCreated(categoryName);
   });
 
-  test('Verify admin is able to create product', async ({ productsPage, newProductPage }) => {
+  test('Verify admin is able to create product', async ({ productsPage, newProductPage, teardown }) => {
     const productName = faker.commerce.productName();
     const productPrice = parseFloat(faker.commerce.price());
     const productDescription = faker.commerce.productDescription();
     const categoryName = faker.number.int({ min: 1, max: 10 }).toString();
     await productsPage.goto();
     await productsPage.clickCreateProductButton();
-    await newProductPage.fillAndSubmit(productName, productPrice, productDescription, categoryName);
+    const response = await newProductPage.fillAndSubmit(productName, productPrice, productDescription, categoryName);
+    const product = await response.json();
+    teardown.track('product', product.id);
     await newProductPage.verifyProductCreated(productName);
   });
 

@@ -2,10 +2,16 @@ import { test, expect } from '../fixtures/pageFIxtures';
 import { faker } from '@faker-js/faker';
 import { activateUserAPI } from '../helpers/activateUserAPI';
 
+
+test.afterEach(async ({ request, teardown }) => {
+  await teardown.cleanup(request);
+});
+
 test.describe('Verify registration', () => {
-  
-  test(`Verify user is able to register and login`, async ({ registrationPage, loginPage, request }) => {
+
+  test(`Verify user is able to register and login`, async ({ registrationPage, loginPage, request, teardown }) => {
     const randomFullName = faker.person.fullName().replace(/[^a-zA-Z0-9]/g, '');
+    teardown.track('user', randomFullName);
     const randomEmail = `${randomFullName}${faker.number.int(100)}@test.com`
     const randomPassword = faker.internet.password({ length: 10, memorable: true, pattern: /[A-Za-z0-9]/ });
     await registrationPage.goto();
