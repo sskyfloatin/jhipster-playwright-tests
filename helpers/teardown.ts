@@ -2,9 +2,8 @@ import { APIRequestContext } from '@playwright/test';
 import fs from 'fs';
 import path from 'path';
 
-const baseUrl = process.env.BASE_URL || 'http://localhost:8080';
-
-export async function deleteEntity(request: APIRequestContext, baseUrl: string, type: 'user' | 'category' | 'product', id: string | number) {
+export async function deleteEntity(request: APIRequestContext, type: 'user' | 'category' | 'product', id: string | number) {
+  const baseUrl = process.env.BASE_URL || 'http://localhost:8080';
   const authFile = JSON.parse(fs.readFileSync(path.join(process.cwd(), '.auth/admin.json'), 'utf-8'));
   const token = authFile.origins[0].localStorage[0].value;
 
@@ -29,7 +28,7 @@ export class TeardownManager {
   
   async cleanup(request: APIRequestContext) {
     for (const entity of this.entities) {
-      await deleteEntity(request, baseUrl, entity.type, entity.id);
+      await deleteEntity(request, entity.type, entity.id);
     }
     this.entities = [];
   }
